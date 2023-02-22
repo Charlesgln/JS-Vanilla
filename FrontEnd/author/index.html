@@ -85,66 +85,73 @@
               <i class="fa-solid fa-xmark"></i>
             </div>
             <h1>Galerie photo</h1>
-            <div class="editGallery">
+            <div class="editGallery"></div>
+            <span class="line"></span>
+            <button id="addPicture">Ajouter une photo</button>
+            <h5>Supprimer la galerie</h5>
           </div>
-          <span class="line"></span>
-          <button id="addPicture">Ajouter une photo</button>
-          <h5>Supprimer la galerie</h5>
         </aside>
-
-
-
 
         <aside id="modal2" class="modal" role="dialog">
           <form>
-
             <div class="modal-wrapper js-modal-stop">
               <div class="backModal">
                 <i class="fa-solid fa-arrow-left"></i>
               </div>
               <div class="closeModal">
-              <i class="fa-solid fa-xmark"></i>
-            </div>
-            
-            <h1>Ajout photo</h1>
-            
-            <div class="addFile">
-              <i class="fa-regular fa-image"></i>
-              <img id="preview" src="" alt="">
-              <div class="buttonPicture">
-                <label for="img">+ Ajouter photo</label>
-                <input id="img" type="file" draggable="true" accept="image/png, image/jpeg" style="display:none;" >
+                <i class="fa-solid fa-xmark"></i>
               </div>
-              <h5>jpg, png : 4mo max</h5>
-            </div>
-            
-            <div class="addTitle">
-              <label for="title">Titre</label>
-              <input id="title" type="text">
-            </div>
-            <div class="chooseCategorie">
-              <label for="categories">Catégorie</label>
-               <select name="categorie" id="categories">
-                 <option>Tous</option>
-                 <option value="1">Objets</option>
-                 <option value="2">Appartements</option>
-                 <option value="3">Hotels & restaurants</option>
+
+              <h1>Ajout photo</h1>
+
+              <div class="addFile">
+                <i class="fa-regular fa-image"></i>
+                <img id="preview" src="" alt="" />
+                <div class="buttonPicture">
+                  <label for="img">+ Ajouter photo</label>
+                  <input
+                    id="img"
+                    type="file"
+                    draggable="true"
+                    accept="image/png, image/jpeg"
+                    style="display: none"
+                  />
+                </div>
+                <h5>jpg, png : 4mo max</h5>
+              </div>
+
+              <div class="addTitle">
+                <label for="title">Titre</label>
+                <input id="title" type="text" />
+              </div>
+              <div class="chooseCategorie">
+                <label for="categories">Catégorie</label>
+                <select name="categorie" id="categories">
+                  <option value="0"></option>
+                  <option value="1">Objets</option>
+                  <option value="2">Appartements</option>
+                  <option value="3">Hotels & restaurants</option>
                 </select>
               </div>
               <span class="line"></span>
               <button id="Validate">Valider</button>
-              <h5 class="errorTitle" style="display: none;">Un Titre doit contenir au minimum 4 caractères*</h5>
-            </form>
-            </aside>
-            
-            
-            
-            
-            
-            <div class="gallery"></div>
-          </section>
-          <section id="contact">
-            <h2>Contact</h2>
+              <h5 class="errorTitle" style="display: none">
+                Un Titre doit contenir au minimum 4 caractères*
+              </h5>
+              <h5 class="errorCategory" style="display: none">
+                Veuillez choisir parmi une des catégories*
+              </h5>
+              <h5 class="errorImg" style="display: none">
+                Veuillez insérer une image*
+              </h5>
+            </div>
+          </form>
+        </aside>
+
+        <div class="gallery"></div>
+      </section>
+      <section id="contact">
+        <h2>Contact</h2>
         <p>Vous avez un projet ? Discutons-en !</p>
         <form action="#" method="post">
           <label for="name">Nom</label>

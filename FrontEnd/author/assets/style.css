@@ -232,8 +232,7 @@ section {
   margin: 60px 0px 46px;
 }
 
-.closeModal,
-.closeModal2 {
+.closeModal {
   position: absolute;
   right: 32px;
   top: 25px;
@@ -265,6 +264,7 @@ section {
 
 #modal2 {
   display: none;
+  background: rgba(0, 0, 0, 0);
 }
 
 .card img {
@@ -387,7 +387,6 @@ section {
 
 input[type="text"] {
   border: 0;
-  width: 410px;
   height: 51px;
   background: #ffffff;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
@@ -425,6 +424,14 @@ select {
   height: 170px;
 }
 
+.errorImg {
+  position: absolute;
+  top: 289px;
+}
+
+figcaption {
+  margin-top: 8px;
+}
 h1 {
   display: flex;
   flex-direction: column;
@@ -498,6 +505,10 @@ li:hover {
 
 #portfolio h2 {
   text-align: center;
+}
+
+#title {
+  width: 410px;
 }
 
 .title-menu {

@@ -248,7 +248,9 @@ li:hover {
   background-color: #1d6154;
   transition: all 0.1s ease-in-out;
 }
-
+figcaption {
+  margin-top: 8px;
+}
 #contact {
   width: 50%;
   margin: auto;

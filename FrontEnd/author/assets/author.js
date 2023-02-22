@@ -14,7 +14,9 @@ const select = document.querySelector('select')
 const previewImg = document.getElementById('preview')
 const hideButtonPicture = document.querySelector('.buttonPicture')
 const errorTitle = document.querySelector('.errorTitle')
-let allworks = [];
+const errorCategory = document.querySelector('.errorCategory')
+const errorImg = document.querySelector('.errorImg')
+let allworks = []
 
 
 const fetchWorks = async () => {
@@ -46,7 +48,8 @@ const worksDisplay = async () => {
   worksDisplay();
 
 
-  const deleteWork = async (workId, e) => {
+  const deleteWork = async (workId, event) => {
+    event.preventDefault();
     await fetch(`http://localhost:5678/api/works/${workId}`, {
       method: 'DELETE',
       headers: {
@@ -57,11 +60,10 @@ const worksDisplay = async () => {
         console.log("Erreur dans la suppréssion"); 
       }
       else {
-        e.preventDefault();
         console.log("C'est bon")
-        e.target.parentNode.remove();
+        event.target.parentNode.remove();
       }
-    })  
+    });
     }
 
     
@@ -73,8 +75,9 @@ const worksDisplay = async () => {
           const button = document.createElement('button');
           button.id = work.id;
           button.innerHTML = `<i class="fa-solid fa-trash-can" style="pointer-events: none;"></i>`
-          button.addEventListener('click', async (e) => {
-             await deleteWork(work.id, e)
+          button.addEventListener('click', async (event) => {
+            event.preventDefault();
+             await deleteWork(work.id, event)
             ;
             
           })
@@ -126,26 +129,20 @@ const worksDisplay = async () => {
             modal1.style.display = "none";
             
           })
-          
-          
+           
           modal2.addEventListener('click', () => {
             modal2.style.display = "none";
             modal1.style.display = "none";
           })
           
-        
           stopPropAll.forEach((element) => element.addEventListener('click', stopPropagation))
-
-
 
        backModal.addEventListener('click', () => {
         modal2.style.display = "none";
        })
         
-
-
-        inputTitle.addEventListener('keypress', () => {
-          if (inputTitle.value.length > 4) {
+        inputTitle.addEventListener('keydown', () => {
+          if (inputTitle.value.length >= 3) {
            inputValidate.style.background = "#1D6154"
            inputValidate.style.cursor = "pointer"
            errorTitle.style.display= "none"
@@ -185,12 +182,17 @@ select.addEventListener('change', function (e) {
 
 inputValidate.addEventListener('click', async (event) => {
   event.preventDefault();
-  console.log(inputTitle.value.length)
-  if (inputTitle.value.length == 0) {
+  console.log(inputTitle.value.length);
+  if (inputTitle.value.length <= 3) {
     errorTitle.style.display= "block"
-    return
-  } else {
-
+  } else if (selectedCategorie == 0) {
+    errorCategory.style.display = "block";
+    errorImg.style.display = "none"; 
+  } else if (inputFile.files.length == 0) {
+    errorImg.style.display = "block"; 
+    errorCategory.style.display = "none";
+  }
+  else {
     formData.append('title', inputTitle.value);
     formData.append('category', selectedCategorie);
     
@@ -202,7 +204,7 @@ inputValidate.addEventListener('click', async (event) => {
       body: formData
     }).catch((error) => {
       console.error('Fetch error:', error)
-    });
+    })
   }
   });
   
