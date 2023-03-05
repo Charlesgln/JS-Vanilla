@@ -16,6 +16,7 @@ const hideButtonPicture = document.querySelector('.buttonPicture')
 const errorTitle = document.querySelector('.errorTitle')
 const errorCategory = document.querySelector('.errorCategory')
 const errorImg = document.querySelector('.errorImg')
+const BearerToken = sessionStorage.getItem('1') 
 let allworks = []
 
 
@@ -28,6 +29,7 @@ const fetchWorks = async () => {
 
 const worksDisplay = async () => {
     await fetchWorks();
+    gallery.innerHTML = '';
     for (let i = 0; i < allworks.length; i++) {
       const work = allworks[i];
 
@@ -49,18 +51,21 @@ const worksDisplay = async () => {
 
 
   const deleteWork = async (workId, event) => {
-    event.preventDefault();
     await fetch(`http://localhost:5678/api/works/${workId}`, {
       method: 'DELETE',
       headers: {
-        'Authorization': 'Bearer ' + sessionStorage.getItem('1') 
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin':'*',
+        'Authorization': 'Bearer ' + BearerToken 
       },
-    }).then((res) => {
+    })
+    .then((res) => {
       if(!res.ok) {
         console.log("Erreur dans la suppréssion"); 
       }
       else {
-        console.log("C'est bon")
+        editDisplay();
+        worksDisplay();
         event.target.parentNode.remove();
       }
     });
@@ -69,6 +74,7 @@ const worksDisplay = async () => {
     
     const editDisplay = async () => {
         await fetchWorks();
+        editGallery.innerHTML = '';
         for (let i = 0; i < allworks.length; i++) {
           const work = allworks[i];
 
@@ -97,7 +103,7 @@ const worksDisplay = async () => {
           
           editGallery.appendChild(card)     
         }
-  
+        
       }
       
       editDisplay();
@@ -177,12 +183,10 @@ let selectedCategorie = 0;
 
 select.addEventListener('change', function (e) {
   selectedCategorie = e.target.value;
-  console.log(selectedCategorie);
 });
 
 inputValidate.addEventListener('click', async (event) => {
   event.preventDefault();
-  console.log(inputTitle.value.length);
   if (inputTitle.value.length <= 3) {
     errorTitle.style.display= "block"
   } else if (selectedCategorie == 0) {
@@ -202,10 +206,16 @@ inputValidate.addEventListener('click', async (event) => {
         'Authorization': 'Bearer ' + sessionStorage.getItem('1')
       },
       body: formData
-    }).catch((error) => {
-      console.error('Fetch error:', error)
-    })
+    }).then((res) => {
+      if(!res.ok) {
+        console.log("Erreur dans la suppréssion"); 
+      }
+      else {
+        editDisplay();
+        worksDisplay();
+      }
+    });
   }
   });
   
- 
+  

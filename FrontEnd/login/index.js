@@ -21,7 +21,7 @@ checkLogin.addEventListener('click', async (event) => {
                 errorLogin.style.display ="block";    
             }   
             else {
-                document.location.href="/FrontEnd/author/index.html";
+                document.location.href="../author";
                 sessionStorage.setItem(data.userId , data.token);
             }                         
         }) 
