@@ -1,90 +1,55 @@
 const gallery = document.querySelector('.gallery');
 const filter = document.querySelector('.filter');
-const sortbyAll = document.getElementById('0');
-const sortbyObject = document.getElementById('1');
-const sortbyAppartments = document.getElementById('2');
-const sortbyHostel = document.getElementById('3');
+const sortByAll = document.getElementById('all')
 
-let allworks = [];
 
 const fetchWorks = async () => {
-    await fetch("http://localhost:5678/api/works")
-    .then((res) => res.json())
-    .then((data) => (allworks = data));   
+    const response = await fetch("http://localhost:5678/api/works");
+    const data = await response.json();
+    return data;
 }
-    
-    const worksDisplay = async () => {
-        await fetchWorks();
-        gallery.innerHTML = allworks.map(
-            (work) => 
-            `
-            <figure>
-            <img src=${work.imageUrl} alt=${work.title}>
-            <figcaption>${work.title}</figcaption>
-            </figure>
-            ` 
-            )
-            .join("")     
-        }    
-        
-worksDisplay();
 
+const fetchCategories = async () => {
+    const response = await fetch("http://localhost:5678/api/categories");
+    const data = await response.json();
+    return data;
+}
 
-sortbyAll.addEventListener('click', async () => {
-    await fetchWorks();
-        gallery.innerHTML = allworks.map(
-            (work) => 
-            `
+const worksDisplay = async (works) => {
+    gallery.innerHTML = works.map(
+        (work) => `
             <figure>
-            <img src=${work.imageUrl} alt=${work.title}>
-            <figcaption>${work.title}</figcaption>
+                <img src=${work.imageUrl} alt=${work.title}>
+                <figcaption>${work.title}</figcaption>
             </figure>
-            ` 
-            )
-            .join("") 
-})
-    
-sortbyObject.addEventListener('click', async () => {
-    await fetchWorks();
-        gallery.innerHTML = allworks.filter((element) => element.categoryId === 1)
-        .map(
-            (work) => 
-            `
-            <figure>
-            <img src=${work.imageUrl} alt=${work.title}>
-            <figcaption>${work.title}</figcaption>
-            </figure>
-            ` 
-            )
-            .join("") 
+        `
+    ).join("");
+}
+
+sortByAll.addEventListener('click', async () => {
+    const works = await fetchWorks();
+    worksDisplay(works)
 })
 
-sortbyAppartments.addEventListener('click', async () => {
- await fetchWorks();
-   gallery.innerHTML = allworks.filter((element) => element.categoryId === 2)
-        .map(
-            (work) => 
-            `
-            <figure>
-            <img src=${work.imageUrl} alt=${work.title}>
-            <figcaption>${work.title}</figcaption>
-            </figure>
-            ` 
-            )
-            .join("") 
-})
+sortByAll.click();
 
-sortbyHostel.addEventListener('click', async () => {
-   await fetchWorks();
-   gallery.innerHTML = allworks.filter((element) => element.categoryId === 3)
-        .map(
-            (work) => 
-            `
-            <figure>
-            <img src=${work.imageUrl} alt=${work.title}>
-            <figcaption>${work.title}</figcaption>
-            </figure>
-            ` 
-            )
-            .join("") 
-})
+const categoryDisplay = async () => {
+    const categories = await fetchCategories();
+
+    for (let i = 0; i < categories.length; i++) {
+        const category = categories[i];
+
+        const button = document.createElement('button');
+        button.id = category.id;
+        button.innerHTML = category.name;
+        filter.appendChild(button);
+
+        button.addEventListener('click', async () => {
+            const works = await fetchWorks();
+            const filteredWorks = works.filter((work) => work.categoryId === category.id);
+            worksDisplay(filteredWorks);
+        });
+    }
+}
+
+categoryDisplay();

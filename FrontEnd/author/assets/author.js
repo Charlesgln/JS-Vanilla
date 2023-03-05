@@ -54,8 +54,6 @@ const worksDisplay = async () => {
     await fetch(`http://localhost:5678/api/works/${workId}`, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin':'*',
         'Authorization': 'Bearer ' + BearerToken 
       },
     })
@@ -162,8 +160,8 @@ const worksDisplay = async () => {
         }
         )
         
-let reader; 
-inputFile.addEventListener('change', () => {
+ inputFile.addEventListener('change', () => {
+  let reader; 
   reader = new FileReader(); 
   const file = inputFile.files[0];
   
@@ -185,8 +183,7 @@ select.addEventListener('change', function (e) {
   selectedCategorie = e.target.value;
 });
 
-inputValidate.addEventListener('click', async (event) => {
-  event.preventDefault();
+inputValidate.addEventListener('click', async () => {
   if (inputTitle.value.length <= 3) {
     errorTitle.style.display= "block"
   } else if (selectedCategorie == 0) {
@@ -203,7 +200,7 @@ inputValidate.addEventListener('click', async (event) => {
     await fetch('http://localhost:5678/api/works', {
       method: 'POST',
       headers: {  
-        'Authorization': 'Bearer ' + sessionStorage.getItem('1')
+        'Authorization': 'Bearer ' + BearerToken
       },
       body: formData
     }).then((res) => {

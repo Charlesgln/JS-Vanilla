@@ -241,6 +241,7 @@ li:hover {
   padding: 0px 20px 0px 20px;
   margin-top: 15px;
   cursor: pointer;
+  margin-left: 13px;
 }
 
 .filter button:focus {
